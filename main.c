@@ -25,23 +25,23 @@ char* getWords(char *find);//获取文件内容
 char* findWords(char *word, int _num,WORDS wd[_num]);//获取多个单词模块
 char getWord(char *words, int num, WORDS wd[num]);//分析获取单个单词模块
 void Download(const int _num,const WORDS wd[_num]);//下载音频模块
-void putword(const int _num,WORDS wd[_num]);
+void putword(const int _num,WORDS wd[_num],int unit);
 void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num);//逆向记忆模块
 void Word_Test(int word_num,char *putout,WORDS wd[]);//单词测试模块
-void Storage_Location(int word_num);//写入位置模块
+void Storage_Location(int unit,int word_num);//写入位置模块
 void WORDS_Init(int num,WORDS wd[num]);//初始化函数
-int Read_Location(void);//读取上一次的位置
-void word_init(char *find,int num);//初始化模块
+int Read_Location(int unit);//读取上一次的位置
+void word_init(char *find,int num,int unit);//初始化模块
 void print_in(char *word);//输出模块
-void Review(WORDS wd[]);//复习模块
+void Review(WORDS wd[],int unit);//复习模块
 void beg();//开始
 
 int main()
 {
     //char *find=NULL;
     system("mode con cols=115 lines=25");
-    system("chcp 65001");
     system("color 6");
+    SetConsoleOutputCP(65001);
     //system("chcp 437");
     system("cls");
     
@@ -67,7 +67,7 @@ int main()
         break;
     }*/
     char find[100]={"二. 连词 (24个)"};
-    word_init(find,24);
+    word_init(find,24,2);
     print_in("学习完成，恭喜");
     Sleep(5000);
     return 0;
@@ -103,7 +103,7 @@ void beg()
     }
     
 }
-void word_init(char *find,int num)
+void word_init(char *find,int num,int unit)
 {
     WORDS wd[num];
     WORDS_Init(num,wd);
@@ -111,7 +111,7 @@ void word_init(char *find,int num)
     char *b=findWords(a,num,wd);
     getWord(b,num, wd);
     Download(num,wd);
-    putword(num,wd);
+    putword(num,wd,unit);
 }
 
 void WORDS_Init(int num,WORDS wd[num])
@@ -216,7 +216,7 @@ char getWord(char *words, int num, WORDS wd[num])
     }
 }
 
-void putword(const int _num,WORDS wd[_num])
+void putword(const int _num,WORDS wd[_num],int unit)
 {
     //word_num + (9 - word_num % 10)
     /*char output[50]={0};
@@ -226,11 +226,11 @@ void putword(const int _num,WORDS wd[_num])
     Sleep(1000);*/
     system("cls");
     char putout[100]={0};
-    int word_num = Read_Location();
+    int word_num = Read_Location(unit);
     char input[20] = {0};
     if(word_num!=0)
     {
-        Review(wd); 
+        Review(wd,unit); 
         system("cls");
         print_in("   复习完成");
         Sleep(1000);
@@ -247,7 +247,7 @@ void putword(const int _num,WORDS wd[_num])
             {
                 return;
             }
-            Storage_Location(i);
+            Storage_Location(unit,i);
             system("cls");
             for (int i = 0; i < 100; i++)
             {
@@ -316,7 +316,7 @@ void putword(const int _num,WORDS wd[_num])
         {
             return;
         }
-        Storage_Location(i);
+        Storage_Location(unit,i);
             system("cls");
             for (int i = 0; i < 100; i++)
             {
@@ -562,41 +562,63 @@ void Word_Test(int word_num,char *putout,WORDS wd[])
 
     }
 }
-void Storage_Location(int word_num)
+
+void Storage_Location(int unit,int word_num)
 {
-    char f_in[5]={0};
+    char f_in[10]={0};
     FILE *fp=fopen("location.log","w");
-    sprintf(f_in,"%d",word_num);
+    sprintf(f_in,"%d%s%d",unit,",",word_num);
     fwrite(f_in,sizeof(char),strlen(f_in),fp);
     fclose(fp);
 }
 
-int Read_Location(void)
+int Read_Location(int unit)
 {
     char f_out[10]={0};
+    char TP='\0';
     int L=0;
+    int temp=0;
     FILE *fp;
-    if((fp=fopen("location.log","r"))==NULL)
+    if((fp=fopen("location.log","r"))==NULL)//如果没有此文件，则返回0
     {
         return 0;
     }
-    else
+    else//如果有，则开始读取
     {
         for (int i = 0; i < 10; i++)
         {
             f_out[i]=fgetc(fp);
-            if (f_out[i]==EOF)
+            if (f_out[i]==',')
             {
                 f_out[i]='\0';
-                sscanf(f_out,"%d",&L);
-                return L;
+                sscanf(f_out,"%d",&temp);
+                if (temp==unit)
+                {
+                    char f_out_next[10]={0};
+                    for (int i = 0; i < 10; i++)
+                    {
+                        f_out_next[i]=fgetc(fp);
+                        if (f_out_next[i]==EOF)
+                        {
+                            f_out_next[i]='\0';
+                            sscanf(f_out_next,"%d",&L);
+                            return L;
+                        }
+                    }
+                }
+                else
+                {                    
+                    return 0;
+                }   
             }  
+            
         }  
     }
     return 0;
 }
 
-void Review(WORDS wd[])
+
+void Review(WORDS wd[],int unit)
 {
     print_in("开始复习(按Enter开始)");
     Sleep(1000);
@@ -610,7 +632,7 @@ void Review(WORDS wd[])
         system("cls");
         return;
     }
-    int word_num=Read_Location();
+    int word_num=Read_Location(unit);
     char putout[100]={0};
     for (int i = 0; i <= word_num ; i++)
         {
