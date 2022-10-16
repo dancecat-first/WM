@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-
+#include<windows.h>
 void Storage_Location(int unit,int word_num)
 {
     char f_in[10]={0};
@@ -55,8 +55,13 @@ int Read_Location(int unit)
     return 0;
 }
 
+
+
 int main()
 {
+    
+    WinExec("a.exe hello",SW_HIDE);
+    WinExec("b.exe hello",SW_HIDE);
     int b=0;
     scanf("%d",&b);
     Storage_Location(b,2);
