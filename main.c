@@ -254,12 +254,12 @@ void putword(const int _num,WORDS wd[_num],int unit)
                 putout[i]='\0';
             }
             sprintf(putout,"请说出中文:%d.%s", i + 1, wd[i].Word);
-            char a[100] = {"start b.exe \""};
+            char a[100] = {"b.exe \""};
             strcpy(&(a[strlen(a)]), wd[i].Word);
             strcpy(&(a[strlen(a)]), "\"\0");
             //print_in("");
             print_in(putout);
-            system(a);
+            WinExec(a,SW_HIDE);
             
             while (1)
             {
@@ -282,7 +282,7 @@ void putword(const int _num,WORDS wd[_num],int unit)
                 }
                 else
                 {
-                    system(a);
+                    WinExec(a,SW_HIDE);
                     system("cls");
                     print_in(putout);
                     fflush(stdin);
@@ -323,10 +323,10 @@ void putword(const int _num,WORDS wd[_num],int unit)
                 putout[i]='\0';
             }
             sprintf(putout,"%s", wd[i].Word);
-            char a[100] = {"start b.exe \""};
+            char a[100] = {"b.exe \""};
             strcpy(&(a[strlen(a)]), wd[i].Word);
             strcpy(&(a[strlen(a)]), "\"\0");
-            system(a);
+            WinExec(a,SW_HIDE);
             
             while (1)
             {
@@ -351,7 +351,7 @@ void putword(const int _num,WORDS wd[_num],int unit)
                 }
                 else
                 {
-                    system(a);
+                    WinExec(a,SW_HIDE);
                     system("cls");
                     print_in(putout);
                     fflush(stdin);
@@ -378,11 +378,11 @@ void Download(const int _num,const WORDS wd[_num])
     
     for (int i = 0; i < _num; i++)
     {
-        char a[100] = {"start a.exe \""};
+        char a[100] = {"a.exe \""};
        
         strcpy(&(a[strlen(a)]), wd[i].Word);
         strcpy(&(a[strlen(a)]), "\"\0");
-        system(a);
+        WinExec(a,SW_HIDE);
         system("cls");
         sprintf(output,"正在加载中。。。(%d/%d)",i+1,_num);
         print_in(output);
@@ -479,11 +479,11 @@ void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num)
                 putout[i]='\0';
             }
             sprintf(putout,"请说出英文:%d.%s", i + 1, wd[i].Means);
-            char a[100] = {"start b.exe \""};
+            char a[100] = {"b.exe \""};
             strcpy(&(a[strlen(a)]), wd[i].Word);
             strcpy(&(a[strlen(a)]), "\"\0");
             print_in(putout);
-            system(a);
+            WinExec(a,SW_HIDE);
             
             while (1)
             {
@@ -506,7 +506,7 @@ void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num)
                 }
                 else
                 {
-                    system(a);
+                    WinExec(a,SW_HIDE);
                     system("cls");
                     print_in(putout);
                     fflush(stdin);
@@ -531,11 +531,11 @@ void Word_Test(int word_num,char *putout,WORDS wd[])
             putout[i]='\0';
         }
         sprintf(putout,"%d.%s", i + 1, wd[i].Means);
-        char a[100] = {"start b.exe \""};
+        char a[100] = {"b.exe \""};
         strcpy(&(a[strlen(a)]), wd[i].Word);
         strcpy(&(a[strlen(a)]), "\"\0");
         print_in(putout);
-        system(a);
+        WinExec(a,SW_HIDE);
  
         while (count<3)
         {
@@ -642,11 +642,11 @@ void Review(WORDS wd[],int unit)
                 putout[i]='\0';
             }
             sprintf(putout,"请说出中文:%d.%s(%d/%d)", i + 1, wd[i].Word,i+1,word_num+1);
-            char a[100] = {"start b.exe \""};
+            char a[100] = {"b.exe \""};
             strcpy(&(a[strlen(a)]), wd[i].Word);
             strcpy(&(a[strlen(a)]), "\"\0");
             print_in(putout);
-            system(a);
+            WinExec(a,SW_HIDE);
             
             while (1)
             {
@@ -669,7 +669,7 @@ void Review(WORDS wd[],int unit)
                 }
                 else
                 {
-                    system(a);
+                    WinExec(a,SW_HIDE);
                     system("cls");
                     print_in(putout);
                     fflush(stdin);
