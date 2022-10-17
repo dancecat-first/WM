@@ -113,9 +113,9 @@ void word_init(char *find,int num,int unit)
     char *a=getWords(find)/*查找find以下的单词*/;
     char *b=findWords(a,num,wd);
     getWord(b,num, wd);
-    //Download(num,wd);
-    Mandatory_testing(num,wd);
+    Download(num,wd);
     putword(num,wd,unit);
+    Mandatory_testing(num,wd);
 }
 
 void WORDS_Init(int num,WORDS wd[num])
