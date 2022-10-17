@@ -554,6 +554,7 @@ void Word_Test(int word_num,char *putout,WORDS wd[])
             }
             else
             {
+                count=0;//清零
                 printf("\n输入正确\n");
                 Sleep(500);
                 break;
