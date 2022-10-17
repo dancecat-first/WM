@@ -1056,7 +1056,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
     {
         printf("%s",pu_2);
     }   
-    printf("%s",pu);
+    printf("%s" ,pu);
 
     return;
     
