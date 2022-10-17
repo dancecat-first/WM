@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
 
 void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_3)
 {
@@ -12,18 +16,63 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
     }*/
     char pu[100]={0};
     char pu_2[100]={0};
-    int sum = 0;
+    int sum_1 = 0;
+    int sum_2 = 0;
+    int sum_3 = 0;
+    int sum_4 = 0;
+    int sum_5 = 0;
     int index = 0;
+    while(title[index])
+    {
+        if (title[index] < 0)
+        {
+            sum_1++;
+        }
+        index++;
+    }
+    index=0;
     while(word[index])
     {
         if (word[index] < 0)
         {
-            sum++;
+            sum_2++;
+        }
+        index++;
+    }
+    index=0;
+    while(word_1[index])
+    {
+        if (word_1[index] < 0)
+        {
+            sum_3++;
+        }
+        index++;
+    }
+    index=0;
+    while(word_2[index])
+    {
+        if (word_2[index] < 0)
+        {
+            sum_4++;
+        }
+        index++;
+    }
+    index=0;
+    while(word_3[index])
+    {
+        if (word_3[index] < 0)
+        {
+            sum_5++;
         }
         index++;
     }
     
-    sum /= 3;
+    sum_1 /= 3;
+    sum_2 /= 3;
+    sum_3 /= 3;
+    sum_4 /= 3;
+    sum_5 /= 3;
+    
     sprintf(pu,"\t\t\t\t");
     for (int i = 4; i < 50+4; i++)
     {
@@ -57,7 +106,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
                 {
                     pu_3[i]='\0';
                 }
-                int t=(strlen(pu_3)-1-sum-3);
+                int t=(strlen(pu_3)-1-sum_1-3);
                 printf("%s",pu_3);
                 for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
                 {
@@ -82,7 +131,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
                 {
                     pu_3[i]='\0';
                 }
-                int t=(strlen(pu_3)-1-sum-3);
+                int t=(strlen(pu_3)-1-sum_2-3);
                 printf("%s",pu_3);
                 for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
                 {
@@ -108,7 +157,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
                 {
                     pu_3[i]='\0';
                 }
-                int t=(strlen(pu_3)-1-sum-3);
+                int t=(strlen(pu_3)-1-sum_3-3);
                 printf("%s",pu_3);
                 for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
                 {
@@ -134,7 +183,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
                 {
                     pu_3[i]='\0';
                 }
-                int t=(strlen(pu_3)-1-sum-3);
+                int t=(strlen(pu_3)-1-sum_4-3);
                 printf("%s",pu_3);
                 for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
                 {
@@ -160,7 +209,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
                 {
                     pu_3[i]='\0';
                 }
-                int t=(strlen(pu_3)-1-sum-3);
+                int t=(strlen(pu_3)-1-sum_5-3);
                 printf("%s",pu_3);
                 for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
                 {
@@ -179,13 +228,14 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
     
 }
 
+
 int main() {
     system("chcp 65001");
     while (1)
     {
         char a[100]={0};
         scanf("%s",a);
-        Component_1("你好","哈哈",a,a,a);
+        Component_1("你","我",a,a,a);
         getchar();
         getchar();
         system("cls");
