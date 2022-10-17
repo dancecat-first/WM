@@ -21,6 +21,7 @@ typedef struct WORDS
     char Means[100];
 } WORDS;
 
+void Mandatory_testing(int num,WORDS wd[num]);//强制测试模块
 char* getWords(char *find);//获取文件内容
 char* findWords(char *word, int _num,WORDS wd[_num]);//获取多个单词模块
 char getWord(char *words, int num, WORDS wd[num]);//分析获取单个单词模块
@@ -112,7 +113,8 @@ void word_init(char *find,int num,int unit)
     char *a=getWords(find)/*查找find以下的单词*/;
     char *b=findWords(a,num,wd);
     getWord(b,num, wd);
-    Download(num,wd);
+    //Download(num,wd);
+    Mandatory_testing(num,wd);
     putword(num,wd,unit);
 }
 
@@ -713,17 +715,20 @@ agian:
         nth=rand()%2;
         if (nth==1)
         {
+            system("cls");
             sprintf(out_put,"%d.%s", i + 1, wd[nth_word].Means);
             char a[100] = {"b.exe \""};
             strcpy(&(a[strlen(a)]), wd[nth_word].Word);
             strcpy(&(a[strlen(a)]), "\"\0");
             print_in(out_put);
             WinExec(a,SW_HIDE);
- 
+
+            count=0;//清零
             while(count<3)
             {
                 char EnterWord[100]={0};
                 printf("请写出英文:");
+                fflush(stdin);
                 scanf("%s",EnterWord);
                 if(strcmp(EnterWord,wd[nth_word].Word)!=0)
                 {
@@ -747,42 +752,44 @@ agian:
         }
         else
         {
+            system("cls");
             sprintf(out_put,"请选择中文:%d.%s", i + 1, wd[nth_word].Word);
             int temp=Generate_random_numbers(4);
             switch (temp)
             {
             case 0:
                 sprintf(out_put_1,"A.%s",wd[nth_word].Means);
-                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)].Means);
-                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)].Means);
-                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)+1].Means);
+                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)+2].Means);
+                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)+3].Means);
                 break;
             case 1:
-                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)+3].Means);
                 sprintf(out_put_2,"B.%s",wd[nth_word].Means);
-                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)].Means);
-                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)+1].Means);
+                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)+2].Means);
                 break;
             case 2:
-                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)].Means);
-                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)+1].Means);
+                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)+2].Means);
                 sprintf(out_put_3,"C.%s",wd[nth_word].Means);
-                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)+3].Means);
                 break;
             case 3:
-                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)].Means);
-                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)].Means);
-                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)+1].Means);
+                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)+2].Means);
+                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)+3].Means);
                 sprintf(out_put_4,"D.%s",wd[nth_word].Means);
                 break;
             default:
                 break;
             }
             Component_1(out_put,out_put_1,out_put_2,out_put_3,out_put_4);
+            count=0;//清零
             while(count<3)
             {
                 char word_answer='0';
-                char EnterWord[100]={0};
+                char EnterWord='0';
                 switch (temp)
                 {
                 case 0:
@@ -801,15 +808,16 @@ agian:
                     break;
                 }
                 printf("请选择:");
-                scanf("%s",EnterWord);
-                if(strcmp(EnterWord,word_answer)!=0)
+                fflush(stdin);
+                EnterWord=getchar();
+                if(EnterWord!=word_answer)
                 {
                     count++;
                     printf("\n输入错误");
-                    printf("\t%s\n",word_answer);
+                    printf("\t%c\n",word_answer);
                     Sleep(1500);
                     system("cls");
-                    print_in(out_put);
+                    Component_1(out_put,out_put_1,out_put_2,out_put_3,out_put_4);
                     continue;
                 }
                 else

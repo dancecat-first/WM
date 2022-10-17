@@ -185,7 +185,7 @@ int main() {
     {
         char a[100]={0};
         scanf("%s",a);
-        print_in(a,a,"helowd",a,a);
+        Component_1("你好","哈哈",a,a,a);
         getchar();
         getchar();
         system("cls");
