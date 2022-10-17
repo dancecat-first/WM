@@ -27,10 +27,12 @@ char getWord(char *words, int num, WORDS wd[num]);//分析获取单个单词模�
 void Download(const int _num,const WORDS wd[_num]);//下载音频模块
 void putword(const int _num,WORDS wd[_num],int unit);
 void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num);//逆向记忆模块
+void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_3);//测试组件1
 void Word_Test(int word_num,char *putout,WORDS wd[]);//单词测试模块
 void Storage_Location(int unit,int word_num);//写入位置模块
 void WORDS_Init(int num,WORDS wd[num]);//初始化函数
 int Read_Location(int unit);//读取上一次的位置
+int Generate_random_numbers(int num);//产生随机数
 void word_init(char *find,int num,int unit);//初始化模块
 void print_in(char *word);//输出模块
 void Review(WORDS wd[],int unit);//复习模块
@@ -75,10 +77,10 @@ int main()
 
 void beg()
 {
-    print_in("      Welcome");
+    print_in("Welcome");
     Sleep(1000);
     system("cls");
-    print_in("    按Enter键开始");
+    print_in("按Enter键开始");
     gotoxy(114,12);
     char turn=getch();
     switch (turn)
@@ -437,7 +439,7 @@ void print_in(char *word)
                 {
                     pu_3[i]=' ';
                 }   
-                int temp=(48-strlen(word))/2+(strlen(word)/2)-5;
+                int temp=50/2-strlen(word)/2+strlen(word)%2+4;
                 strncpy(&pu_3[temp],word,strlen(word));
                 for (int i = temp+strlen(word); i < 100; i++)
                 {
@@ -461,6 +463,7 @@ void print_in(char *word)
     return;
     
 }
+
 
 void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num)
 {
@@ -678,4 +681,330 @@ void Review(WORDS wd[],int unit)
             }
         }
 
+}
+
+void Mandatory_testing(int num,WORDS wd[num])
+{
+    int ago_num[1024]={0};
+
+    int count=0;
+    int nth_word=0;
+    int nth=0;
+    for(int i=0;i<num;i++)
+    {
+        char out_put[100]={0};
+        char out_put_1[100]={0};
+        char out_put_2[100]={0};
+        char out_put_3[100]={0};
+        char out_put_4[100]={0};
+        nth_word=rand()%num;
+        srand((unsigned)time(NULL));
+agian:
+        for(int j=0;j<i;j++)
+        {
+            
+            if(nth_word==ago_num[j])
+            {
+                nth_word=rand()%num;
+                srand((unsigned)time(NULL));
+                goto agian;
+            }
+        }
+        nth=rand()%2;
+        if (nth==1)
+        {
+            sprintf(out_put,"%d.%s", i + 1, wd[nth_word].Means);
+            char a[100] = {"b.exe \""};
+            strcpy(&(a[strlen(a)]), wd[nth_word].Word);
+            strcpy(&(a[strlen(a)]), "\"\0");
+            print_in(out_put);
+            WinExec(a,SW_HIDE);
+ 
+            while(count<3)
+            {
+                char EnterWord[100]={0};
+                printf("请写出英文:");
+                scanf("%s",EnterWord);
+                if(strcmp(EnterWord,wd[nth_word].Word)!=0)
+                {
+                    count++;
+                    printf("\n输入错误");
+                    printf("\t%s\n",wd[nth_word].Word);
+                    Sleep(1500);
+                    system("cls");
+                    print_in(out_put);
+                    continue;
+                }
+                else
+                {
+                    count=0;//清零
+                    printf("\n输入正确\n");
+                    Sleep(500);
+                    break;
+                }
+            }
+            ago_num[i]=nth_word;
+        }
+        else
+        {
+            sprintf(out_put,"请选择中文:%d.%s", i + 1, wd[nth_word].Word);
+            int temp=Generate_random_numbers(4);
+            switch (temp)
+            {
+            case 0:
+                sprintf(out_put_1,"A.%s",wd[nth_word].Means);
+                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)].Means);
+                break;
+            case 1:
+                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_2,"B.%s",wd[nth_word].Means);
+                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)].Means);
+                break;
+            case 2:
+                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_3,"C.%s",wd[nth_word].Means);
+                sprintf(out_put_4,"D.%s",wd[Generate_random_numbers(num)].Means);
+                break;
+            case 3:
+                sprintf(out_put_1,"A.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_2,"B.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_3,"C.%s",wd[Generate_random_numbers(num)].Means);
+                sprintf(out_put_4,"D.%s",wd[nth_word].Means);
+                break;
+            default:
+                break;
+            }
+            Component_1(out_put,out_put_1,out_put_2,out_put_3,out_put_4);
+            while(count<3)
+            {
+                char word_answer='0';
+                char EnterWord[100]={0};
+                switch (temp)
+                {
+                case 0:
+                        word_answer='A';
+                    break;
+                case 1:
+                        word_answer='B';
+                    break;
+                case 2:
+                        word_answer='C';
+                    break;
+                case 3:
+                        word_answer='D';
+                    break;
+                default:
+                    break;
+                }
+                printf("请选择:");
+                scanf("%s",EnterWord);
+                if(strcmp(EnterWord,word_answer)!=0)
+                {
+                    count++;
+                    printf("\n输入错误");
+                    printf("\t%s\n",word_answer);
+                    Sleep(1500);
+                    system("cls");
+                    print_in(out_put);
+                    continue;
+                }
+                else
+                {
+                    count=0;//清零
+                    printf("\n输入正确\n");
+                    Sleep(500);
+                    break;
+                }
+            }
+            ago_num[i]=nth_word;
+        }
+
+    }
+}
+
+int Generate_random_numbers(int num)
+{
+    int rand_4=rand()%num;
+    srand((unsigned)time(NULL));
+    return rand_4;
+}
+
+void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_3)
+{
+    /*if(strlen(word)>45-15)
+    {
+        puts("The word is too long");
+        return;
+    }*/
+    char pu[100]={0};
+    char pu_2[100]={0};
+    int sum = 0;
+    int index = 0;
+    while(word[index])
+    {
+        if (word[index] < 0)
+        {
+            sum++;
+        }
+        index++;
+    }
+    
+    sum /= 3;
+    sprintf(pu,"\t\t\t\t");
+    for (int i = 4; i < 50+4; i++)
+    {
+        sprintf(&pu[i],"-");
+    }
+    sprintf(&pu[strlen(pu)],"\n");
+    
+    
+    sprintf(pu_2,"%s","\t\t\t\t*\t\t\t\t\t\t *\n");
+    printf("%s",pu);
+
+    for (int i = 0; i < 2; i++)
+    {
+        printf("%s",pu_2);
+    }
+
+            {
+                char pu_3[100]={0};
+                for(int i=0;i<4;i++)
+                {
+                    pu_3[i]='\t';
+                }
+                pu_3[4]='*';
+                for (int i = 5; i < 54; i++)
+                {
+                    pu_3[i]=' ';
+                }   
+                int temp=50/2-strlen(title)/2+strlen(title)%2+4;
+                strncpy(&pu_3[temp],title,strlen(title));
+                for (int i = temp+strlen(title); i < 100; i++)
+                {
+                    pu_3[i]='\0';
+                }
+                int t=(strlen(pu_3)-1-sum-3);
+                printf("%s",pu_3);
+                for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
+                {
+                    printf("%c",' ');
+                }
+                printf("*\n");
+            }
+   
+            {    char pu_3[100]={0};
+                for(int i=0;i<4;i++)
+                {
+                    pu_3[i]='\t';
+                }
+                pu_3[4]='*';
+                for (int i = 5; i < 54; i++)
+                {
+                    pu_3[i]=' ';
+                }   
+                int temp=50/2-strlen(word)/2+strlen(word)%2+4;
+                strncpy(&pu_3[temp],word,strlen(word));
+                for (int i = temp+strlen(word); i < 100; i++)
+                {
+                    pu_3[i]='\0';
+                }
+                int t=(strlen(pu_3)-1-sum-3);
+                printf("%s",pu_3);
+                for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
+                {
+                    printf("%c",' ');
+                }
+                printf("*\n");
+            }
+                
+            {
+                char pu_3[100]={0};
+                for(int i=0;i<4;i++)
+                {
+                    pu_3[i]='\t';
+                }
+                pu_3[4]='*';
+                for (int i = 5; i < 54; i++)
+                {
+                    pu_3[i]=' ';
+                }   
+                int temp=50/2-strlen(word_1)/2+strlen(word_1)%2+4;
+                strncpy(&pu_3[temp],word_1,strlen(word_1));
+                for (int i = temp+strlen(word_1); i < 100; i++)
+                {
+                    pu_3[i]='\0';
+                }
+                int t=(strlen(pu_3)-1-sum-3);
+                printf("%s",pu_3);
+                for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
+                {
+                    printf("%c",' ');
+                }
+                printf("*\n");
+            }
+
+            {
+                char pu_3[100]={0};
+                for(int i=0;i<4;i++)
+                {
+                    pu_3[i]='\t';
+                }
+                pu_3[4]='*';
+                for (int i = 5; i < 54; i++)
+                {
+                    pu_3[i]=' ';
+                }   
+                int temp=50/2-strlen(word_2)/2+strlen(word_2)%2+4;
+                strncpy(&pu_3[temp],word_2,strlen(word_2));
+                for (int i = temp+strlen(word_2); i < 100; i++)
+                {
+                    pu_3[i]='\0';
+                }
+                int t=(strlen(pu_3)-1-sum-3);
+                printf("%s",pu_3);
+                for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
+                {
+                    printf("%c",' ');
+                }
+                printf("*\n");
+            }
+
+            {
+                char pu_3[100]={0};
+                for(int i=0;i<4;i++)
+                {
+                    pu_3[i]='\t';
+                }
+                pu_3[4]='*';
+                for (int i = 5; i < 54; i++)
+                {
+                    pu_3[i]=' ';
+                }   
+                int temp=50/2-strlen(word_3)/2+strlen(word_3)%2+4;
+                strncpy(&pu_3[temp],word_3,strlen(word_3));
+                for (int i = temp+strlen(word_3); i < 100; i++)
+                {
+                    pu_3[i]='\0';
+                }
+                int t=(strlen(pu_3)-1-sum-3);
+                printf("%s",pu_3);
+                for (int i = 0; i < (50-t-1)/*+sum*2-1*/; i++)
+                {
+                    printf("%c",' ');
+                }
+                printf("*\n");
+            }
+        
+    for (int i = 0; i < 3; i++)
+    {
+        printf("%s",pu_2);
+    }   
+    printf("%s",pu);
+
+    return;
+    
 }
