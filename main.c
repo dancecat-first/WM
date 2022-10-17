@@ -687,9 +687,9 @@ void Review(WORDS wd[],int unit)
 
 void Mandatory_testing(int num,WORDS wd[num])
 {
+    int fraction=0;
     int ago_num[1024]={0};
 
-    int count=0;
     int nth_word=0;
     int nth=0;
     for(int i=0;i<num;i++)
@@ -723,31 +723,19 @@ agian:
             print_in(out_put);
             WinExec(a,SW_HIDE);
 
-            count=0;//清零
-            while(count<3)
-            {
                 char EnterWord[100]={0};
                 printf("请写出英文:");
                 fflush(stdin);
                 scanf("%s",EnterWord);
                 if(strcmp(EnterWord,wd[nth_word].Word)!=0)
                 {
-                    count++;
-                    printf("\n输入错误");
-                    printf("\t%s\n",wd[nth_word].Word);
-                    Sleep(1500);
                     system("cls");
-                    print_in(out_put);
-                    continue;
                 }
                 else
                 {
-                    count=0;//清零
-                    printf("\n输入正确\n");
-                    Sleep(500);
-                    break;
+                    fraction+=100/num;
                 }
-            }
+
             ago_num[i]=nth_word;
         }
         else
@@ -785,11 +773,10 @@ agian:
                 break;
             }
             Component_1(out_put,out_put_1,out_put_2,out_put_3,out_put_4);
-            count=0;//清零
-            while(count<3)
-            {
-                char word_answer='0';
-                char EnterWord='0';
+
+
+                char word_answer='\0';
+                char EnterWord='\0';
                 switch (temp)
                 {
                 case 0:
@@ -812,26 +799,20 @@ agian:
                 EnterWord=getchar();
                 if(EnterWord!=word_answer)
                 {
-                    count++;
-                    printf("\n输入错误");
-                    printf("\t%c\n",word_answer);
-                    Sleep(1500);
                     system("cls");
-                    Component_1(out_put,out_put_1,out_put_2,out_put_3,out_put_4);
-                    continue;
                 }
                 else
                 {
-                    count=0;//清零
-                    printf("\n输入正确\n");
-                    Sleep(500);
-                    break;
+                    fraction+=100/num;
                 }
-            }
             ago_num[i]=nth_word;
+            
         }
-
     }
+    char your_fraction[50]={0};
+    sprintf(your_fraction,"你的分数是:%d",fraction);
+    print_in(your_fraction);
+    return;
 }
 
 int Generate_random_numbers(int num)
@@ -843,11 +824,7 @@ int Generate_random_numbers(int num)
 
 void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_3)
 {
-    /*if(strlen(word)>45-15)
-    {
-        puts("The word is too long");
-        return;
-    }*/
+    
     char pu[100]={0};
     char pu_2[100]={0};
     int sum_1 = 0;
@@ -1056,7 +1033,7 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
     {
         printf("%s",pu_2);
     }   
-    printf("%s" ,pu);
+    printf("%s",pu);
 
     return;
     
