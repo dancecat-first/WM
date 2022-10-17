@@ -307,8 +307,6 @@ void putword(const int _num,WORDS wd[_num],int unit)
             print_in("再来一次");
             getch();
         }
-       
-        
        }
         word_num += 10;
     }
@@ -367,13 +365,16 @@ void putword(const int _num,WORDS wd[_num],int unit)
             return;
     }
     Reverse_Memory(word_num,putout,wd,_num);
-       for(int i=0;i<2;i++)
-       {
+    for(int i=0;i<2;i++)
+   {
         Word_Test(word_num,putout,wd);
         system("cls");
-        print_in("再来一次");
-        getch();
-       }
+        if(i==0)
+        {
+            print_in("再来一次");
+            getch();
+        }
+   }
 }
 
 void Download(const int _num,const WORDS wd[_num])
@@ -394,11 +395,6 @@ void Download(const int _num,const WORDS wd[_num])
 }
 void print_in(char *word)
 {
-    /*if(strlen(word)>45-15)
-    {
-        puts("The word is too long");
-        return;
-    }*/
     char pu[100]={0};
     char pu_2[100]={0};
     int sum = 0;
@@ -470,7 +466,7 @@ void print_in(char *word)
 void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num)
 {
     system("cls");
-     print_in("开始逆向记忆");
+    print_in("开始逆向记忆");
     Sleep(500);
         for (int i = word_num; i <= word_num + (9 - word_num % 10); i++)
         {
@@ -489,7 +485,7 @@ void Reverse_Memory(int word_num,char *putout,WORDS wd[],int _num)
             strcpy(&(a[strlen(a)]), "\"\0");
             print_in(putout);
             WinExec(a,SW_HIDE);
-            
+
             while (1)
             {
                 char get = getchar();
@@ -542,6 +538,7 @@ void Word_Test(int word_num,char *putout,WORDS wd[])
         print_in(putout);
         WinExec(a,SW_HIDE);
  
+        count=0;
         while (count<3)
         {
             char EnterWord[100]={0};
@@ -810,7 +807,7 @@ agian:
         }
     }
     char your_fraction[50]={0};
-    sprintf(your_fraction,"你的分数是:%d",fraction);
+    sprintf(your_fraction,"你的分数是:%d",fraction);//输出分数
     print_in(your_fraction);
     return;
 }
@@ -827,6 +824,10 @@ void Component_1(char *title,char *word,char * word_1,char * word_2,char * word_
     
     char pu[100]={0};
     char pu_2[100]={0};
+
+    /*
+    对每个输入进行检测中文字数
+    */
     int sum_1 = 0;
     int sum_2 = 0;
     int sum_3 = 0;
